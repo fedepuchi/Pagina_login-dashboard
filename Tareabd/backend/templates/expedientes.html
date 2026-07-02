@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Expedientes{% endblock %}
+
+{% block content %}
+<h1>Expedientes</h1>
+
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Aseguradora</th>
+            <th>Cliente</th>
+            <th>Juzgado</th>
+            <th>Estado</th>
+            <th>Fecha agenda</th>
+            <th>Asignado a</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for fila in filas %}
+        <tr>
+            <td>{{ fila.id }}</td>
+            <td>{{ fila.aseguradora }}</td>
+            <td>{{ fila.cliente }}</td>
+            <td>{{ fila.juzgado }}</td>
+            <td>{{ fila.estado }}</td>
+            <td>{{ fila.fecha_agenda }}</td>
+            <td>{{ fila.usuario or '—' }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="7">No hay expedientes registrados.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Reportes{% endblock %}
+
+{% block content %}
+<h1>Reportes</h1>
+
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Tipo</th>
+            <th>Generado</th>
+            <th>Generado por</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for fila in filas %}
+        <tr>
+            <td>{{ fila.id }}</td>
+            <td>{{ fila.titulo }}</td>
+            <td>{{ fila.tipo }}</td>
+            <td>{{ fila.generado_en }}</td>
+            <td>{{ fila.usuario or '—' }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5">No hay reportes generados.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

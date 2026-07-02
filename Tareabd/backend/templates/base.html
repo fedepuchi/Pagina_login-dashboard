@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %} · Sistema de expedientes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+
+<body>
+    <header class="topbar">
+        <button class="menu-btn" aria-label="Menú">&#9776;</button>
+        <div class="topbar-user">
+            <span>Lic. {{ session.usuario }}</span>
+            <a href="{{ url_for('logout') }}">&#8677; Salir</a>
+        </div>
+    </header>
+
+    <div class="layout {% block layout_class %}{% endblock %}">
+        <nav class="sidebar">
+            <a class="nav-item {{ 'active' if activo == 'inicio' }}" href="{{ url_for('dashboard') }}">&#8962; Inicio</a>
+            <a class="nav-item {{ 'active' if activo == 'expedientes' }}" href="{{ url_for('expedientes') }}">&#9986; Expedientes</a>
+            <a class="nav-item {{ 'active' if activo == 'reportes' }}" href="{{ url_for('reportes') }}">&#128196; Reportes</a>
+            <div class="nav-section">Configuración &#9881;</div>
+            <a class="nav-item {{ 'active' if activo == 'aseguradoras' }}" href="{{ url_for('aseguradoras') }}">&#127974; Aseguradora</a>
+            <a class="nav-item {{ 'active' if activo == 'usuarios' }}" href="{{ url_for('usuarios') }}">&#128100; Usuarios</a>
+            <a class="nav-item {{ 'active' if activo == 'juzgados' }}" href="{{ url_for('juzgados') }}">&#127963; Juzgado</a>
+        </nav>
+
+        <main class="content">
+            {% block content %}{% endblock %}
+        </main>
+
+        {% block aside %}{% endblock %}
+    </div>
+</body>
+
+</html>

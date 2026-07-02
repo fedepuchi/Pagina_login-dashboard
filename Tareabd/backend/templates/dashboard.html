@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Agenda del día{% endblock %}
+{% block layout_class %}has-aside{% endblock %}
+
+{% block content %}
+<h1>Agenda del día</h1>
+<h2>{{ fecha_larga }}</h2>
+
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Aseguradora</th>
+            <th>Cliente</th>
+            <th>Juzgado</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for fila in agenda %}
+        <tr>
+            <td>{{ fila.aseguradora }}</td>
+            <td>{{ fila.cliente }}</td>
+            <td>{{ fila.juzgado }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="3">No hay expedientes agendados para hoy.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="status-cards">
+    <div class="status-card pendientes">
+        <span class="status-icon">&#128203;</span>
+        <div>
+            <div class="status-label">Pendientes</div>
+            <div class="status-count">{{ pendientes }}</div>
+        </div>
+    </div>
+    <div class="status-card en-curso">
+        <span class="status-icon">&#128228;</span>
+        <div>
+            <div class="status-label">En curso</div>
+            <div class="status-count">{{ en_curso }}</div>
+        </div>
+    </div>
+    <div class="status-card cerrados">
+        <span class="status-icon">&#128193;</span>
+        <div>
+            <div class="status-label">Cerrados</div>
+            <div class="status-count">{{ cerrados }}</div>
+        </div>
+    </div>
+</div>
+
+<button class="fab" aria-label="Agregar expediente">+</button>
+{% endblock %}
+
+{% block aside %}
+<aside class="calendar">
+    <div class="calendar-header">
+        <span>&lsaquo;</span>
+        <strong>{{ mes_nombre }}</strong>
+        <span>&rsaquo;</span>
+    </div>
+    <table class="calendar-table">
+        <thead>
+            <tr>
+                <th>S</th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for semana in semanas %}
+            <tr>
+                {% for anio, mes, dia in semana %}
+                {% if mes != hoy.month %}
+                <td class="muted">{{ dia }}</td>
+                {% elif dia == hoy.day %}
+                <td class="today">{{ dia }}</td>
+                {% else %}
+                <td>{{ dia }}</td>
+                {% endif %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</aside>
+{% endblock %}

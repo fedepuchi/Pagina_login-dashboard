@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>HTML Login Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="main">
+        
+        <h3>INGRESAR A CUENTA</h3>
+
+        {% if info %}
+        <p style="color:red;">{{ info }}</p>
+        {% endif %}
+
+        <form action="/form_login" method="post">
+            <label for="first"></label>
+            <input type="text" id="first" name="username" placeholder="USUARIO" required>
+
+            <label for="password">
+            </label>
+            <input type="password" id="password" name="password" 
+                placeholder="CONTRASENA" required>
+
+            <div class="wrap">
+                <button type="submit">
+                    INGRESAR A CUENTA
+                </button>
+            </div>
+        </form>
+        
+        <h3>OLVIDASTE TU CONTRASENA</h3>
+    </div>
+</body>
+
+</html>
