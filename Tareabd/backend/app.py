@@ -6,10 +6,9 @@ from datetime import date
 from flask import Flask, request, render_template, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
-from dotenv import load_dotenv  # <-- ESTA LÍNEA ES LA QUE FALTA
+from dotenv import load_dotenv
 from werkzeug.security import check_password_hash
 
-# initialize flask function
 app = Flask(__name__)
 load_dotenv()
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE')
@@ -27,8 +26,7 @@ def formatear_fecha_es(fecha):
 
 
 def construir_calendario(fecha):
-    # Semanas empezando en domingo, incluyendo días del mes anterior/siguiente
-    # para rellenar la cuadrícula, tal como en el wireframe.
+   
     cal = calendar_module.Calendar(firstweekday=6)
     celdas = list(cal.itermonthdays3(fecha.year, fecha.month))
     return [celdas[i:i + 7] for i in range(0, len(celdas), 7)]
@@ -43,7 +41,6 @@ def login_required(f):
     return wrapper
 
 
-# Esta ruta mostrará el formulario de login cuando entres a la página principal
 @app.route('/')
 def index():
     if 'usuario' in session:
@@ -154,6 +151,5 @@ def logout():
     return redirect(url_for('index'))
 
 
-# Run flask in debug mode
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.getenv('PORT', 5000)))

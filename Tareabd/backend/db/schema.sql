@@ -1,27 +1,20 @@
--- Esquema de la base de datos "login_db"
--- Motor: PostgreSQL 16 (contenedor Docker: auth-postgres)
--- Tarea: pantallas de Login y Agenda del día
 
--- Tabla usuarios: cuentas que inician sesión en el sistema
 CREATE TABLE IF NOT EXISTS usuarios (
     id         SERIAL PRIMARY KEY,
     nombre     VARCHAR(50)  NOT NULL UNIQUE,
     contrasena VARCHAR(255) NOT NULL
 );
 
--- Catálogo de aseguradoras (pantalla Configuración > Aseguradora)
 CREATE TABLE IF NOT EXISTS aseguradoras (
     id     SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL UNIQUE
 );
 
--- Catálogo de juzgados (pantalla Configuración > Juzgado)
 CREATE TABLE IF NOT EXISTS juzgados (
     id     SERIAL PRIMARY KEY,
     nombre VARCHAR(150) NOT NULL UNIQUE
 );
 
--- Expedientes: alimenta la pantalla "Agenda del día"
 CREATE TABLE IF NOT EXISTS expedientes (
     id             SERIAL PRIMARY KEY,
     aseguradora_id INTEGER      NOT NULL REFERENCES aseguradoras(id),
@@ -39,20 +32,15 @@ CREATE INDEX IF NOT EXISTS idx_expedientes_estado        ON expedientes (estado)
 CREATE INDEX IF NOT EXISTS idx_expedientes_aseguradora   ON expedientes (aseguradora_id);
 CREATE INDEX IF NOT EXISTS idx_expedientes_juzgado       ON expedientes (juzgado_id);
 
--- Reportes generados desde la pantalla "Reportes"
--- (registro de qué reporte se generó, de qué tipo y quién lo generó)
 CREATE TABLE IF NOT EXISTS reportes (
     id          SERIAL PRIMARY KEY,
     titulo      VARCHAR(150) NOT NULL,
-    tipo        VARCHAR(50)  NOT NULL,   -- ej: 'expedientes_por_estado', 'expedientes_por_aseguradora'
+    tipo        VARCHAR(50)  NOT NULL,  
     generado_en TIMESTAMP    NOT NULL DEFAULT NOW(),
     usuario_id  INTEGER      REFERENCES usuarios(id) ON DELETE SET NULL
 );
 
--- ---------------------------------------------------------------
--- Datos de ejemplo para poder ver la Agenda del día en la demo
--- (ajusta fecha_agenda a la fecha en la que vayas a hacer la demo)
--- ---------------------------------------------------------------
+
 
 INSERT INTO aseguradoras (nombre) VALUES
     ('ASSA'), ('ANCON'), ('CONANCE'), ('PARTICULAR'), ('INTEROCEANICA')
